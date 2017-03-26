@@ -80,9 +80,10 @@ void test();
 
 int main(int argc, const char * argv[]) {
   test();
+  
   return 0;
   
-  path path = "/Users/jack/Desktop/Diner Dash [EUR].cso";
+  path path = "/Volumes/Vicky/Roms/roms/psp/SORTED/Action/Diner Dash [EUR].cso";
   
   if (!path.exists())
     throw excpts::file_not_found_exception(path, "input file not found");
