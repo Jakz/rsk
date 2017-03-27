@@ -17,20 +17,9 @@ using u32 = uint32_t;
 using u64 = uint64_t;
 using byte = u8;
 
+constexpr size_t KB16 = 16384;
+
 namespace utils
 {
   std::string humanReadableSize(size_t bytes, bool si);
-}
-
-namespace exceptions
-{
-  struct file_not_found : public std::exception
-  {
-  private:
-    path path;
-    
-  public:
-    file_not_found(const class path& path) : path(path) { }
-    const char* what() const noexcept override { return path.c_str(); }
-  };
 }

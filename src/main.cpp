@@ -88,7 +88,7 @@ void md5(const std::string &progname, std::vector<std::string>::const_iterator b
 int main(int argc, const char * argv[])
 {
   //const std::vector<std::string> args(argv + 1, argv + argc);
-  const std::vector<std::string> args = {"md5"};
+  const std::vector<std::string> args = {"md5", "-u", "/Users/jack/Desktop/IMG_0892.JPG"};
   args::ArgumentParser parser("rom-swiss-knife");
   args::HelpFlag help(parser, "help", "Display this help menu", {'h', "help"});
   parser.Prog(argv[0]);
@@ -129,7 +129,7 @@ int main(int argc, const char * argv[])
   path path = "/Volumes/Vicky/Roms/roms/psp/SORTED/Action/Diner Dash [EUR].cso";
   
   if (!path.exists())
-    throw excpts::file_not_found_exception(path, "input file not found");
+    throw exceptions::file_not_found(path);
   
   FILE* in = fopen(path.c_str(), "rb");
   

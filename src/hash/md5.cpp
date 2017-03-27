@@ -52,7 +52,7 @@ public:
   void update(const byte *buf, size_t length);
   void update(const char *buf, size_t length);
   MD5& finalize();
-  std::string hexdigest() const;
+  std::string hexdigest(bool uppercase) const;
   friend std::ostream& operator<<(std::ostream&, MD5 md5);
   
 private:
@@ -346,14 +346,14 @@ MD5& MD5::finalize()
 //////////////////////////////
 
 // return hex representation of digest as string
-std::string MD5::hexdigest() const
+std::string MD5::hexdigest(bool uppercase = false) const
 {
   if (!finalized)
     return "";
   
   char buf[33];
   for (int i=0; i<16; i++)
-    sprintf(buf+i*2, "%02x", digest[i]);
+    sprintf(buf+i*2, uppercase ? "%02X" : "%02x", digest[i]);
   buf[32]=0;
   
   return std::string(buf);
@@ -383,8 +383,8 @@ void run(const std::string& name, repository::arg_iterator begin, repository::ar
   args::ArgumentParser parser("");
   parser.Prog(name + " md5");
   
+  args::Flag uppercase(parser, "uppercase", "Print result in uppercase format", {'u', "uppercase"}, false);
   args::Positional<std::string> directory(parser, "path", "File to calculate MD5 hash on");
-  
 
   parser.ParseArgs(begin, end);
   
@@ -392,12 +392,34 @@ void run(const std::string& name, repository::arg_iterator begin, repository::ar
   
   if (!path.exists())
     throw exceptions::file_not_found(path);
+  
+  file_handle handle = file_handle(path, file_mode::READING);
+  
+  if (!handle)
+    throw exceptions::error_opening_file(path);
+  
+  MD5 md5;
 
+  size_t fileLength = handle.length();
+  size_t current = 0;
+  std::unique_ptr<byte[]> bufferPtr = std::unique_ptr<byte[]>(new byte[KB16]);
+  byte* buffer = bufferPtr.get();
   
-  /*MD5 md5 = MD5("helloworld");
-  std::cout << md5 << std::endl;
+  while (current < fileLength)
+  {
+    size_t amountToProcess = std::min(KB16, fileLength - current);
+    
+    if (handle.read(buffer, 1, amountToProcess))
+      md5.update(buffer, amountToProcess);
+    else
+      throw exceptions::error_reading_from_file(path);
+    
+    current += KB16;
+  }
   
-  assert(md5.hexdigest() == "fc5e038d38a57032085441e7fe7010b0");*/
+  md5.finalize();
+  
+  std::cout << md5.hexdigest(uppercase) << std::endl;
 }
 
 static const repository::CommandBuilder builder(repository::Command("md5", "computes MD5 hash of a file", run));
