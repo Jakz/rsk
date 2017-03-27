@@ -383,12 +383,15 @@ void run(const std::string& name, repository::arg_iterator begin, repository::ar
   args::ArgumentParser parser("");
   parser.Prog(name + " md5");
   
+  args::HelpFlag help(parser, "help", "Display this help menu", {'h', "help"});
   args::Flag uppercase(parser, "uppercase", "Print result in uppercase format", {'u', "uppercase"}, false);
-  args::Positional<std::string> directory(parser, "path", "File to calculate MD5 hash on");
-
+  args::Positional<std::string> argpath(parser, "path", "File to calculate MD5 hash on");
+  
+  parser.Help(std::cout);
+  
   parser.ParseArgs(begin, end);
   
-  path path = args::get(directory);
+  path path = args::get(argpath);
   
   if (!path.exists())
     throw exceptions::file_not_found(path);

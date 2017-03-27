@@ -79,19 +79,13 @@ size_t file_length(FILE* file)
 
 void test();
 
-void md5(const std::string &progname, std::vector<std::string>::const_iterator beginargs, std::vector<std::string>::const_iterator endargs)
-{
-  std::cout << "MD5" << std::endl;
-}
-
-
 int main(int argc, const char * argv[])
 {
   //const std::vector<std::string> args(argv + 1, argv + argc);
-  const std::vector<std::string> args = {"md5", "-u", "/Users/jack/Desktop/IMG_0892.JPG"};
-  args::ArgumentParser parser("rom-swiss-knife");
+  const std::vector<std::string> args = {"md5"};
+  args::ArgumentParser parser("rsk");
   args::HelpFlag help(parser, "help", "Display this help menu", {'h', "help"});
-  parser.Prog(argv[0]);
+  parser.Prog("rsk");
   parser.ProglinePostfix("{arguments}");
   const auto map = repository::Repository::instance()->prepareCommandMap();
   args::MapPositional<std::string, repository::arg_command> command(parser, "command", "Command to execute", map);
@@ -102,13 +96,13 @@ int main(int argc, const char * argv[])
     auto next = parser.ParseArgs(args);
     if (command)
     {
-      args::get(command)(argv[0], next, std::end(args));
+      args::get(command)("rsk", next, std::end(args));
     } else
     {
       std::cout << parser;
     }
   }
-  catch (args::Help)
+  catch (args::Help e)
   {
     std::cout << parser;
     return 0;

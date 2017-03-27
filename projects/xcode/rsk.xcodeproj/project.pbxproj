@@ -33,30 +33,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		040F7CAE1E761EB400C8B0BC /* Arg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Arg.h; sourceTree = "<group>"; };
-		040F7CAF1E761EB400C8B0BC /* ArgException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArgException.h; sourceTree = "<group>"; };
-		040F7CB01E761EB400C8B0BC /* ArgTraits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArgTraits.h; sourceTree = "<group>"; };
-		040F7CB11E761EB400C8B0BC /* CmdLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CmdLine.h; sourceTree = "<group>"; };
-		040F7CB21E761EB400C8B0BC /* CmdLineInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CmdLineInterface.h; sourceTree = "<group>"; };
-		040F7CB31E761EB400C8B0BC /* CmdLineOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CmdLineOutput.h; sourceTree = "<group>"; };
-		040F7CB41E761EB400C8B0BC /* Constraint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constraint.h; sourceTree = "<group>"; };
-		040F7CB51E761EB400C8B0BC /* DocBookOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DocBookOutput.h; sourceTree = "<group>"; };
-		040F7CB61E761EB400C8B0BC /* HelpVisitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpVisitor.h; sourceTree = "<group>"; };
-		040F7CB71E761EB400C8B0BC /* IgnoreRestVisitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IgnoreRestVisitor.h; sourceTree = "<group>"; };
-		040F7CBA1E761EB400C8B0BC /* MultiArg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultiArg.h; sourceTree = "<group>"; };
-		040F7CBB1E761EB400C8B0BC /* MultiSwitchArg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultiSwitchArg.h; sourceTree = "<group>"; };
-		040F7CBC1E761EB400C8B0BC /* OptionalUnlabeledTracker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionalUnlabeledTracker.h; sourceTree = "<group>"; };
-		040F7CBD1E761EB400C8B0BC /* StandardTraits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StandardTraits.h; sourceTree = "<group>"; };
-		040F7CBE1E761EB400C8B0BC /* StdOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StdOutput.h; sourceTree = "<group>"; };
-		040F7CBF1E761EB400C8B0BC /* SwitchArg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwitchArg.h; sourceTree = "<group>"; };
-		040F7CC01E761EB400C8B0BC /* UnlabeledMultiArg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnlabeledMultiArg.h; sourceTree = "<group>"; };
-		040F7CC11E761EB400C8B0BC /* UnlabeledValueArg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnlabeledValueArg.h; sourceTree = "<group>"; };
-		040F7CC21E761EB400C8B0BC /* ValueArg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ValueArg.h; sourceTree = "<group>"; };
-		040F7CC31E761EB400C8B0BC /* ValuesConstraint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ValuesConstraint.h; sourceTree = "<group>"; };
-		040F7CC41E761EB400C8B0BC /* VersionVisitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VersionVisitor.h; sourceTree = "<group>"; };
-		040F7CC51E761EB400C8B0BC /* Visitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Visitor.h; sourceTree = "<group>"; };
-		040F7CC61E761EB400C8B0BC /* XorHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XorHandler.h; sourceTree = "<group>"; };
-		040F7CC71E761EB400C8B0BC /* ZshCompletionOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZshCompletionOutput.h; sourceTree = "<group>"; };
 		041CE25A1E75E229002C4783 /* rsk */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = rsk; sourceTree = BUILT_PRODUCTS_DIR; };
 		041CE2671E75E30E002C4783 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		041CE2911E75E3ED002C4783 /* cso.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cso.h; sourceTree = "<group>"; };
@@ -96,37 +72,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		040F7CAD1E761EB400C8B0BC /* tclap */ = {
-			isa = PBXGroup;
-			children = (
-				040F7CAE1E761EB400C8B0BC /* Arg.h */,
-				040F7CAF1E761EB400C8B0BC /* ArgException.h */,
-				040F7CB01E761EB400C8B0BC /* ArgTraits.h */,
-				040F7CB11E761EB400C8B0BC /* CmdLine.h */,
-				040F7CB21E761EB400C8B0BC /* CmdLineInterface.h */,
-				040F7CB31E761EB400C8B0BC /* CmdLineOutput.h */,
-				040F7CB41E761EB400C8B0BC /* Constraint.h */,
-				040F7CB51E761EB400C8B0BC /* DocBookOutput.h */,
-				040F7CB61E761EB400C8B0BC /* HelpVisitor.h */,
-				040F7CB71E761EB400C8B0BC /* IgnoreRestVisitor.h */,
-				040F7CBA1E761EB400C8B0BC /* MultiArg.h */,
-				040F7CBB1E761EB400C8B0BC /* MultiSwitchArg.h */,
-				040F7CBC1E761EB400C8B0BC /* OptionalUnlabeledTracker.h */,
-				040F7CBD1E761EB400C8B0BC /* StandardTraits.h */,
-				040F7CBE1E761EB400C8B0BC /* StdOutput.h */,
-				040F7CBF1E761EB400C8B0BC /* SwitchArg.h */,
-				040F7CC01E761EB400C8B0BC /* UnlabeledMultiArg.h */,
-				040F7CC11E761EB400C8B0BC /* UnlabeledValueArg.h */,
-				040F7CC21E761EB400C8B0BC /* ValueArg.h */,
-				040F7CC31E761EB400C8B0BC /* ValuesConstraint.h */,
-				040F7CC41E761EB400C8B0BC /* VersionVisitor.h */,
-				040F7CC51E761EB400C8B0BC /* Visitor.h */,
-				040F7CC61E761EB400C8B0BC /* XorHandler.h */,
-				040F7CC71E761EB400C8B0BC /* ZshCompletionOutput.h */,
-			);
-			path = tclap;
-			sourceTree = "<group>";
-		};
 		041CE2511E75E229002C4783 = {
 			isa = PBXGroup;
 			children = (
@@ -180,7 +125,6 @@
 			isa = PBXGroup;
 			children = (
 				04B20FF91E88400100758225 /* args.h */,
-				040F7CAD1E761EB400C8B0BC /* tclap */,
 				041CE2941E75E3ED002C4783 /* fmt */,
 			);
 			path = util;

@@ -5,6 +5,11 @@
 
 #include "path.h"
 
+namespace args
+{
+  class ArgumentParser;
+}
+
 namespace exceptions
 {
   class rsk_exception : public std::exception
@@ -44,5 +49,15 @@ namespace exceptions
     error_reading_from_file(const class path& path) : path(path) { }
     
     const char* what() const noexcept override { return path.c_str(); }
+  };
+  
+  class parse_help_request : public rsk_exception
+  {
+  private:
+    const args::ArgumentParser& parser;
+    
+  public:
+    parse_help_request(const args::ArgumentParser& parser) : parser(parser) { }
+    const char* what() const noexcept override { return nullptr; }
   };
 }
