@@ -7,7 +7,8 @@
 //
 
 #include "base/common.h"
-
+#include "repository.h"
+#include "util/args.h"
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -78,8 +79,49 @@ size_t file_length(FILE* file)
 
 void test();
 
-int main(int argc, const char * argv[]) {
-  test();
+void md5(const std::string &progname, std::vector<std::string>::const_iterator beginargs, std::vector<std::string>::const_iterator endargs)
+{
+  std::cout << "MD5" << std::endl;
+}
+
+
+int main(int argc, const char * argv[])
+{
+  std::unordered_map<std::string, repository::arg_command> map{
+    {"md5", md5},
+  };
+  
+  //const std::vector<std::string> args(argv + 1, argv + argc);
+  const std::vector<std::string> args = {"md5"};
+  args::ArgumentParser parser("rom-swiss-knife");
+  args::HelpFlag help(parser, "help", "Display this help menu", {'h', "help"});
+  parser.Prog(argv[0]);
+  parser.ProglinePostfix("{arguments}");
+  args::MapPositional<std::string, repository::arg_command> command(parser, "command", "Command to execute", map);
+  command.KickOut(true);
+
+  try
+  {
+    auto next = parser.ParseArgs(args);
+    if (command)
+    {
+      args::get(command)(argv[0], next, std::end(args));
+    } else
+    {
+      std::cout << parser;
+    }
+  }
+  catch (args::Help)
+  {
+    std::cout << parser;
+    return 0;
+  }
+  catch (args::Error e)
+  {
+    std::cerr << e.what() << std::endl;
+    std::cerr << parser;
+    return 1;
+  }
   
   return 0;
   
