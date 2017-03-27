@@ -21,3 +21,16 @@ namespace utils
 {
   std::string humanReadableSize(size_t bytes, bool si);
 }
+
+namespace exceptions
+{
+  struct file_not_found : public std::exception
+  {
+  private:
+    path path;
+    
+  public:
+    file_not_found(const class path& path) : path(path) { }
+    const char* what() const noexcept override { return path.c_str(); }
+  };
+}

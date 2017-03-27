@@ -7,8 +7,8 @@
 //
 
 #include "base/common.h"
-#include "repository.h"
 #include "util/args.h"
+#include "repository.h"
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -87,16 +87,13 @@ void md5(const std::string &progname, std::vector<std::string>::const_iterator b
 
 int main(int argc, const char * argv[])
 {
-  std::unordered_map<std::string, repository::arg_command> map{
-    {"md5", md5},
-  };
-  
   //const std::vector<std::string> args(argv + 1, argv + argc);
   const std::vector<std::string> args = {"md5"};
   args::ArgumentParser parser("rom-swiss-knife");
   args::HelpFlag help(parser, "help", "Display this help menu", {'h', "help"});
   parser.Prog(argv[0]);
   parser.ProglinePostfix("{arguments}");
+  const auto map = repository::Repository::instance()->prepareCommandMap();
   args::MapPositional<std::string, repository::arg_command> command(parser, "command", "Command to execute", map);
   command.KickOut(true);
 
@@ -121,6 +118,10 @@ int main(int argc, const char * argv[])
     std::cerr << e.what() << std::endl;
     std::cerr << parser;
     return 1;
+  }
+  catch (exceptions::file_not_found e)
+  {
+    std::cerr << "Error, file not found: " << e.what() << std::endl;
   }
   
   return 0;

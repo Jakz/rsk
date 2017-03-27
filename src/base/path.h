@@ -12,8 +12,9 @@ public:
   path(const std::string& data) : data(data) { }
   
   bool exists() const;
+  size_t length() const;
   
-  const char* c_str() { return data.c_str(); }
+  const char* c_str() const { return data.c_str(); }
   
   friend std::ostream& operator<<(std::ostream& os, const class path& path) { os << path.data; return os; }
 };

@@ -1,4 +1,5 @@
 #include "base/common.h"
+#include "base/exceptions.h"
 
 #include <cstring>
 #include <iostream>
@@ -374,10 +375,29 @@ std::string md5(const std::string str)
   return md5.hexdigest();
 }
 
-static void test()
+
+#include "repository.h"
+
+void run(const std::string& name, repository::arg_iterator begin, repository::arg_iterator end)
 {
-  MD5 md5 = MD5("helloworld");
+  args::ArgumentParser parser("");
+  parser.Prog(name + " md5");
+  
+  args::Positional<std::string> directory(parser, "path", "File to calculate MD5 hash on");
+  
+
+  parser.ParseArgs(begin, end);
+  
+  path path = args::get(directory);
+  
+  if (!path.exists())
+    throw exceptions::file_not_found(path);
+
+  
+  /*MD5 md5 = MD5("helloworld");
   std::cout << md5 << std::endl;
   
-  assert(md5.hexdigest() == "fc5e038d38a57032085441e7fe7010b0");
+  assert(md5.hexdigest() == "fc5e038d38a57032085441e7fe7010b0");*/
 }
+
+static const repository::CommandBuilder builder(repository::Command("md5", "computes MD5 hash of a file", run));
