@@ -21,7 +21,18 @@ std::unordered_map<std::string, arg_command> Repository::prepareCommandMap()
   return commandMap;
 }
 
-CommandBuilder::CommandBuilder(const Command& command)
+
+args::ArgumentParser Command::buildParser() const
+{
+  args::ArgumentParser parser(this->description);
+  parser.Prog("rsk " + this->name);
+  parser.helpParams.flagindent = 3;
+  parser.helpParams.showTerminator = false;
+  return parser;
+}
+
+
+CommandBuilder::CommandBuilder(const Command& command) : _command(command)
 {
   Repository::instance()->registerCommand(command);
 }

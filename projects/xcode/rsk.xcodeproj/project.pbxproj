@@ -18,6 +18,7 @@
 		041CE2B21E75F74C002C4783 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041CE2B11E75F74C002C4783 /* md5.cpp */; };
 		047B219C1E79902600DD9FFD /* iso9660.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047B219B1E79902600DD9FFD /* iso9660.cpp */; };
 		04B20FF81E883D9400758225 /* repository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B20FF61E883D9400758225 /* repository.cpp */; };
+		04BB09771E94A375001196BC /* crc32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04BB09761E94A375001196BC /* crc32.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,6 +59,7 @@
 		04B20FF61E883D9400758225 /* repository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = repository.cpp; sourceTree = "<group>"; };
 		04B20FF71E883D9400758225 /* repository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = repository.h; sourceTree = "<group>"; };
 		04B20FF91E88400100758225 /* args.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = args.h; sourceTree = "<group>"; };
+		04BB09761E94A375001196BC /* crc32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = crc32.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 		041CE2B01E75F74C002C4783 /* hash */ = {
 			isa = PBXGroup;
 			children = (
+				04BB09761E94A375001196BC /* crc32.cpp */,
 				041CE2B11E75F74C002C4783 /* md5.cpp */,
 			);
 			path = hash;
@@ -226,6 +229,7 @@
 				041CE2A31E75E408002C4783 /* posix.cc in Sources */,
 				041CE2AC1E75E8BE002C4783 /* common.cpp in Sources */,
 				041CE2A01E75E400002C4783 /* main.cpp in Sources */,
+				04BB09771E94A375001196BC /* crc32.cpp in Sources */,
 				041CE2A11E75E402002C4783 /* format.cc in Sources */,
 				041CE2A41E75E40E002C4783 /* printf.cc in Sources */,
 				04B20FF81E883D9400758225 /* repository.cpp in Sources */,

@@ -20,6 +20,8 @@
 
 #define FATAL_ERROR(c, ...) if (c) { std::cout << __VA_ARGS__; return 1; }
 
+#define PROG_NAME "rsk"
+
 struct cso_header
 {
   char magic[4]; // always CISO
@@ -79,33 +81,48 @@ size_t file_length(FILE* file)
 
 void test();
 
+void listCommand(const std::string& name, repository::arg_iterator begin, repository::arg_iterator end)
+{
+  using namespace std;
+  const repository::Repository* repo = repository::Repository::instance();
+  
+  constexpr size_t indent = 4;
+  
+  cout << "Available commands:" << endl;
+  for (const repository::Command& command : *repo)
+  {
+    cout << string(indent, ' ') << command.name << ": " << command.description << endl;
+  }
+}
+
 int main(int argc, const char * argv[])
 {
   //const std::vector<std::string> args(argv + 1, argv + argc);
-  const std::vector<std::string> args = {"md5"};
-  args::ArgumentParser parser("rsk");
-  args::HelpFlag help(parser, "help", "Display this help menu", {'h', "help"});
-  parser.Prog("rsk");
+  const std::vector<std::string> args = {"list"};//{"crc32", "/Users/jack/Desktop/hiroshi3.rar"};
+  args::ArgumentParser parser(PROG_NAME);
+  parser.helpParams.showProglineOptions = false;
+  parser.helpParams.showTerminator = false;
+  parser.Prog(PROG_NAME);
   parser.ProglinePostfix("{arguments}");
-  const auto map = repository::Repository::instance()->prepareCommandMap();
+  auto map = repository::Repository::instance()->prepareCommandMap();
+  map["list"] = listCommand;
   args::MapPositional<std::string, repository::arg_command> command(parser, "command", "Command to execute", map);
   command.KickOut(true);
 
   try
   {
     auto next = parser.ParseArgs(args);
-    if (command)
-    {
-      args::get(command)("rsk", next, std::end(args));
-    } else
-    {
-      std::cout << parser;
-    }
+    args::get(command)(PROG_NAME, next, std::end(args));
   }
   catch (args::Help e)
   {
     std::cout << parser;
     return 0;
+  }
+  catch (args::MapError e)
+  {
+    std::cout << "Unknown or unspecified command, use '" PROG_NAME " list' to see available commands." << std::endl;
+    return 1;
   }
   catch (args::Error e)
   {

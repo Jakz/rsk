@@ -378,16 +378,18 @@ std::string md5(const std::string str)
 
 #include "repository.h"
 
+void run(const std::string& name, repository::arg_iterator begin, repository::arg_iterator end);
+static const repository::CommandBuilder builder(repository::Command("md5", "computes MD5 hash of a file", run));
+
 void run(const std::string& name, repository::arg_iterator begin, repository::arg_iterator end)
 {
-  args::ArgumentParser parser("");
-  parser.Prog(name + " md5");
-  
+  args::ArgumentParser parser = builder.command().buildParser();
+
   args::HelpFlag help(parser, "help", "Display this help menu", {'h', "help"});
   args::Flag uppercase(parser, "uppercase", "Print result in uppercase format", {'u', "uppercase"}, false);
   args::Positional<std::string> argpath(parser, "path", "File to calculate MD5 hash on");
   
-  parser.Help(std::cout);
+  //parser.Help(std::cout);
   
   parser.ParseArgs(begin, end);
   
@@ -425,4 +427,3 @@ void run(const std::string& name, repository::arg_iterator begin, repository::ar
   std::cout << md5.hexdigest(uppercase) << std::endl;
 }
 
-static const repository::CommandBuilder builder(repository::Command("md5", "computes MD5 hash of a file", run));

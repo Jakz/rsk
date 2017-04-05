@@ -18,6 +18,8 @@ namespace repository
 
     Command(const std::string& name, const std::string& description, const arg_command& callback) :
     name(name), description(description), callback(callback) { }
+    
+    args::ArgumentParser buildParser() const;
   };
   
   class Repository
@@ -29,12 +31,20 @@ namespace repository
     void registerCommand(const Command& command) { commands.push_back(command); }
     std::unordered_map<std::string, arg_command> prepareCommandMap();
     
+    using iterator = std::vector<Command>::const_iterator;
+
+    iterator begin() const { return commands.begin(); }
+    iterator end() const { return commands.end(); }
+    
     static Repository* instance();
   };
   
   class CommandBuilder
   {
+  private:
+    const Command _command;
   public:
     CommandBuilder(const Command& command);
+    const Command& command() const { return _command; }
   };
 }
