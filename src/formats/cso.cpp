@@ -44,53 +44,6 @@ std::string human_readable_size(size_t bytes, bool si) {
   return buffer;
 }
 
-int inflate(byte* src, size_t length, byte* dest, size_t destLength)
-{
-  z_stream strm;
-  strm.zalloc = Z_NULL;
-  strm.zfree = Z_NULL;
-  strm.opaque = Z_NULL;
-  strm.total_out = 0;
-  strm.avail_in = static_cast<unsigned>(length);
-  strm.total_in = strm.avail_in;
-  strm.next_in = src;
-  
-  int r = inflateInit2(&strm, -15);
-  
-  if (r != Z_OK)
-    return r;
-
-  strm.next_out = dest;
-  strm.avail_out = static_cast<uint32_t>(destLength);
-  
-  do
-  {
-    r = inflate(&strm, Z_FINISH);
-    
-    switch (r)
-    {
-      case Z_NEED_DICT: r = Z_DATA_ERROR;
-      case Z_DATA_ERROR:
-      case Z_MEM_ERROR:
-        inflateEnd(&strm);
-        return r;
-    }
-  } while (r != Z_STREAM_END);
-
-  inflateEnd(&strm);
-  return r == Z_STREAM_END ? Z_OK : Z_DATA_ERROR;
-}
-
-size_t file_length(FILE* file)
-{
-  size_t current = ftell(file);
-  fseek(file, 0, SEEK_END);
-  size_t length = ftell(file);
-  fseek(file, current, SEEK_SET);
-  return length;
-}
-
-
 int main(int argc, const char * argv[]) {
   std::string path = "/Volumes/Vicky/Roms/roms/psp/SORTED/Action/Diner Dash [EUR].cso";
   

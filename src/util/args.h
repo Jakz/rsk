@@ -193,7 +193,8 @@ namespace argstest
     class ValidationError : public Error
     {
     public:
-      ValidationError(const std::string &problem) : Error(problem) {}
+      const ArgumentParser& parser;
+      ValidationError(const ArgumentParser& parser, const std::string &problem) : Error(problem), parser(parser) {}
       virtual ~ValidationError() {};
     };
     
@@ -1378,7 +1379,7 @@ namespace argstest
 #else
                   std::ostringstream problem;
                   problem << "Group validation failed somewhere!";
-                  throw ValidationError(problem.str());
+                  throw ValidationError(*this, problem.str());
 #endif
                 }
                 return end;

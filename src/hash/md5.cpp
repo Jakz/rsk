@@ -385,7 +385,6 @@ void run(const std::string& name, repository::arg_iterator begin, repository::ar
 {
   args::ArgumentParser parser = builder.command().buildParser();
 
-  args::HelpFlag help(parser, "help", "Display this help menu", {'h', "help"});
   args::Flag uppercase(parser, "uppercase", "Print result in uppercase format", {'u', "uppercase"}, false);
   args::Positional<std::string> argpath(parser, "path", "File to calculate MD5 hash on");
   

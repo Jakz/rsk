@@ -19,7 +19,11 @@ using byte = u8;
 
 constexpr size_t KB16 = 16384;
 
+enum class ZlibResult : int;
+
 namespace utils
 {
   std::string humanReadableSize(size_t bytes, bool si);
+  
+  int inflate(byte* src, size_t length, byte* dest, size_t destLength);
 }

@@ -33,43 +33,6 @@ struct cso_header
   uint8_t unused[2];
 } __attribute((packed));
 
-int inflate(byte* src, size_t length, byte* dest, size_t destLength)
-{
-  z_stream strm;
-  strm.zalloc = Z_NULL;
-  strm.zfree = Z_NULL;
-  strm.opaque = Z_NULL;
-  strm.total_out = 0;
-  strm.avail_in = static_cast<unsigned>(length);
-  strm.total_in = strm.avail_in;
-  strm.next_in = src;
-  
-  int r = inflateInit2(&strm, -15);
-  
-  if (r != Z_OK)
-    return r;
-
-  strm.next_out = dest;
-  strm.avail_out = static_cast<uint32_t>(destLength);
-  
-  do
-  {
-    r = inflate(&strm, Z_FINISH);
-    
-    switch (r)
-    {
-      case Z_NEED_DICT: r = Z_DATA_ERROR;
-      case Z_DATA_ERROR:
-      case Z_MEM_ERROR:
-        inflateEnd(&strm);
-        return r;
-    }
-  } while (r != Z_STREAM_END);
-
-  inflateEnd(&strm);
-  return r == Z_STREAM_END ? Z_OK : Z_DATA_ERROR;
-}
-
 size_t file_length(FILE* file)
 {
   size_t current = ftell(file);
@@ -84,12 +47,17 @@ void test();
 void listCommand(const std::string& name, repository::arg_iterator begin, repository::arg_iterator end)
 {
   using namespace std;
-  const repository::Repository* repo = repository::Repository::instance();
+  using namespace repository;
+  const Repository* repo = Repository::instance();
   
   constexpr size_t indent = 4;
-  
+  vector<Command> commands(repo->begin(), repo->end());
+  sort(commands.begin(), commands.end(), [](const Command& c1, const Command& c2) {
+    return c1.name < c2.name;
+  });
+   
   cout << "Available commands:" << endl;
-  for (const repository::Command& command : *repo)
+  for (const Command& command : commands)
   {
     cout << string(indent, ' ') << command.name << ": " << command.description << endl;
   }
@@ -98,7 +66,7 @@ void listCommand(const std::string& name, repository::arg_iterator begin, reposi
 int main(int argc, const char * argv[])
 {
   //const std::vector<std::string> args(argv + 1, argv + argc);
-  const std::vector<std::string> args = {"list"};//{"crc32", "/Users/jack/Desktop/hiroshi3.rar"};
+  const std::vector<std::string> args = {"cso"};//{"crc32", "/Users/jack/Desktop/hiroshi3.rar"};
   args::ArgumentParser parser(PROG_NAME);
   parser.helpParams.showProglineOptions = false;
   parser.helpParams.showTerminator = false;
@@ -117,6 +85,11 @@ int main(int argc, const char * argv[])
   catch (args::Help e)
   {
     std::cout << parser;
+    return 0;
+  }
+  catch (args::ValidationError e)
+  {
+    std::cout << e.parser;
     return 0;
   }
   catch (args::MapError e)
@@ -204,9 +177,9 @@ int main(int argc, const char * argv[])
       fseek(in, realOffset, SEEK_SET);
       fread(block, sizeof(byte), blockCompressedSize, in);
       
-      int r = inflate(block, blockCompressedSize, buffer, header.block_size);
+      int r = utils::inflate(block, blockCompressedSize, buffer, header.block_size);
       
-      assert(r == Z_OK);
+      assert(!r);
       
       delete [] block;
     }
@@ -232,4 +205,21 @@ int main(int argc, const char * argv[])
   fclose(in);
   
   delete [] buffer;
+}
+
+static void run(const std::string& name, repository::arg_iterator begin, repository::arg_iterator end);
+static const repository::CommandBuilder builder(repository::Command("cso", "CSO format conversions", run));
+
+static void run(const std::string& name, repository::arg_iterator begin, repository::arg_iterator end)
+{
+  args::ArgumentParser parser = builder.command().buildParser();
+  args::Group group(parser, "operating mode", args::Group::Validators::Xor);
+  args::Flag extract(parser, "extract", "extract ISO from CSO", {"e", "extract"});
+  args::Flag create(parser, "create", "create CSO from ISO", {"c", "create"});
+  args::Flag info(parser, "info", "get CSO file information", {"i", "info"});
+
+  args::Positional<std::string> src(parser, "src", "source path");
+  args::Positional<std::string> dest(parser, "dest", "destination path");
+  
+  parser.ParseArgs(begin, end);
 }

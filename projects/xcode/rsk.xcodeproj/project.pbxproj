@@ -36,7 +36,7 @@
 /* Begin PBXFileReference section */
 		041CE25A1E75E229002C4783 /* rsk */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = rsk; sourceTree = BUILT_PRODUCTS_DIR; };
 		041CE2671E75E30E002C4783 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		041CE2911E75E3ED002C4783 /* cso.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cso.h; sourceTree = "<group>"; };
+		041CE2911E75E3ED002C4783 /* cso.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cso.cpp; sourceTree = "<group>"; };
 		041CE2921E75E3ED002C4783 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		041CE2951E75E3ED002C4783 /* container.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = container.h; sourceTree = "<group>"; };
 		041CE2961E75E3ED002C4783 /* format.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = format.cc; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 		041CE2901E75E3ED002C4783 /* formats */ = {
 			isa = PBXGroup;
 			children = (
-				041CE2911E75E3ED002C4783 /* cso.h */,
+				041CE2911E75E3ED002C4783 /* cso.cpp */,
 				047B219B1E79902600DD9FFD /* iso9660.cpp */,
 			);
 			path = formats;
