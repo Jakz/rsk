@@ -64,9 +64,9 @@ void listCommand(const std::string& name, repository::arg_iterator begin, reposi
 }
 
 int main(int argc, const char * argv[])
-{
+{  
   //const std::vector<std::string> args(argv + 1, argv + argc);
-  const std::vector<std::string> args = {"cso"};//{"crc32", "/Users/jack/Desktop/hiroshi3.rar"};
+  const std::vector<std::string> args = /*{"list"};*/{"crc32", "/Users/jack/Desktop/hiroshi3.rar"};
   args::ArgumentParser parser(PROG_NAME);
   parser.helpParams.showProglineOptions = false;
   parser.helpParams.showTerminator = false;
