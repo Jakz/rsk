@@ -67,3 +67,9 @@ namespace utils
   
   int inflate(byte* src, size_t length, byte* dest, size_t destLength);
 }
+
+namespace strings
+{
+  std::string humanReadableSize(size_t bytes, bool si);
+  bool isPrefixOf(const std::string& string, const std::string& prefix);
+}

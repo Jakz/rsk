@@ -65,6 +65,30 @@ void listCommand(const std::string& name, repository::arg_iterator begin, reposi
 
 int main(int argc, const char * argv[])
 {  
+  const path path1 = "/Volumes/Vicky/Photos-SSD/Organized/Vacanze";
+  const path path2 = "/Volumes/Data/Photos/Organized/Vacanze";
+  
+  auto files1 = path::scanFolder(path1, true, [](const path& path) { return path.c_str()[0] == '.' || path.hasExtension("ithmb") || path.hasExtension("tmp"); });
+  auto files2 = path::scanFolder(path2, true, [](const path& path) { return path.c_str()[0] == '.' || path.hasExtension("ithmb"); });
+  std::unordered_set<path, path::hash> diff;
+  
+  for (const path& p : files1)
+    if (files2.find(path2.append(p.relativizeToParent(path1))) == files2.end())
+      diff.insert(p);
+  
+  for (const path& p : files2)
+    if (files1.find(path1.append(p.relativizeToParent(path2))) == files1.end())
+      diff.insert(p);
+  
+  std::cout << "Found " << files1.size() << " and " << files2.size() << std::endl;
+  for (const path& p : diff)
+    std::cout << p << std::endl;
+  
+  
+  
+  
+  return 0;
+  
   //const std::vector<std::string> args(argv + 1, argv + argc);
   const std::vector<std::string> args = /*{"list"};*/{"crc32", "/Users/jack/Desktop/hiroshi3.rar"};
   args::ArgumentParser parser(PROG_NAME);

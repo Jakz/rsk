@@ -96,7 +96,7 @@ int main(int argc, const char * argv[]) {
     uint32_t realOffset = (offset & ~0x80000000) << header.index_shift;
     uint32_t blockCompressedSize = (offsets[i+1] & ~0x80000000) - realOffset;
     
-    // compressed
+    // uncompressed
     if (offset & 0x80000000)
     {
       assert(blockCompressedSize == header.block_size);

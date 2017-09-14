@@ -26,7 +26,18 @@ namespace exceptions
     file_not_found(const class path& path) : path(path) { }
 
     const char* what() const noexcept override { return path.c_str(); }
-
+  };
+  
+  class path_non_relative : public rsk_exception
+  {
+  private:
+    path parent;
+    path children;
+    
+  public:
+    path_non_relative(const path& parent, const path& children) : parent(parent), children(children) { }
+    
+    const char* what() const noexcept override { return parent.c_str(); }
   };
   
   class error_opening_file : public rsk_exception

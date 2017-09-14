@@ -2,7 +2,7 @@
 
 #include <zlib.h>
 
-std::string utils::humanReadableSize(size_t bytes, bool si) {
+std::string strings::humanReadableSize(size_t bytes, bool si) {
   static constexpr char pre[][7] = { "kMGTPE", "KMGTPE"};
   
   
@@ -12,6 +12,13 @@ std::string utils::humanReadableSize(size_t bytes, bool si) {
   
   return fmt::sprintf("%.1f %c%sB", bytes / std::pow(unit, exp), pre[si ? 1 : 0][exp-1], si ? "" : "i");
 }
+
+bool strings::isPrefixOf(const std::string& string, const std::string& prefix)
+{
+  return std::mismatch(prefix.begin(), prefix.end(), string.begin()).first == prefix.end();
+}
+
+
 
 enum class ZlibResult : int
 {
