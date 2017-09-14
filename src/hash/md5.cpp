@@ -6,28 +6,28 @@
 
 #if defined(__BYTE_ORDER) && __BYTE_ORDER == __BIG_ENDIAN || \
 \
-  defined(__BIG_ENDIAN__) || \
-  defined(__ARMEB__) || \
-  defined(__THUMBEB__) || \
-  defined(__AARCH64EB__) || \
-  defined(_MIBSEB) || defined(__MIBSEB) || defined(__MIBSEB__)
+defined(__BIG_ENDIAN__) || \
+defined(__ARMEB__) || \
+defined(__THUMBEB__) || \
+defined(__AARCH64EB__) || \
+defined(_MIBSEB) || defined(__MIBSEB) || defined(__MIBSEB__)
 
 #define IS_BIG_ENDIAN
 constexpr bool IS_LITTLE_ENDIAN_ = false;
 
 #elif defined(__BYTE_ORDER) && __BYTE_ORDER == __LITTLE_ENDIAN || \
 \
-  defined(__LITTLE_ENDIAN__) || \
-  defined(__ARMEL__) || \
-  defined(__THUMBEL__) || \
-  defined(__AARCH64EL__) || \
-  defined(_MIPSEL) || defined(__MIPSEL) || defined(__MIPSEL__)
+defined(__LITTLE_ENDIAN__) || \
+defined(__ARMEL__) || \
+defined(__THUMBEL__) || \
+defined(__AARCH64EL__) || \
+defined(_MIPSEL) || defined(__MIPSEL) || defined(__MIPSEL__)
 
 #define IS_LITTLE_ENDIAN
 constexpr bool IS_LITTLE_ENDIAN_ = true;
 
 #else
-  #error "Unknown endianness!"
+#error "Unknown endianness!"
 #endif
 
 union aliased_uint32
@@ -384,7 +384,7 @@ static const repository::CommandBuilder builder(repository::Command("md5", "comp
 void run(const std::string& name, repository::arg_iterator begin, repository::arg_iterator end)
 {
   args::ArgumentParser parser = builder.command().buildParser();
-
+  
   args::Flag uppercase(parser, "uppercase", "Print result in uppercase format", {'u', "uppercase"}, false);
   args::Positional<std::string> argpath(parser, "path", "File to calculate MD5 hash on");
   
@@ -403,7 +403,7 @@ void run(const std::string& name, repository::arg_iterator begin, repository::ar
     throw exceptions::error_opening_file(path);
   
   MD5 md5;
-
+  
   size_t fileLength = handle.length();
   size_t current = 0;
   std::unique_ptr<byte[]> bufferPtr = std::unique_ptr<byte[]>(new byte[KB16]);
@@ -425,4 +425,3 @@ void run(const std::string& name, repository::arg_iterator begin, repository::ar
   
   std::cout << md5.hexdigest(uppercase) << std::endl;
 }
-

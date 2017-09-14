@@ -44,6 +44,28 @@ public:
   static std::unordered_set<path, hash> scanFolder(path base, bool recursive, std::function<bool(const path&)> excludePredicate);
 };
 
+class relative_path
+{
+private:
+  path _parent;
+  path _child;
+  
+public:
+  struct hash
+  {
+  public:
+    size_t operator()(const relative_path& p) const { return path::hash()(p._parent.append(p._child)); }
+  };
+  
+  relative_path(const path& parent, const path& child) : _parent(parent), _child(child) { }
+  
+  const path& parent() const { return _parent; }
+  const path& child() const { return _child; }
+  
+  bool operator==(const path& path) const { return _parent.append(_child) == path; }
+  bool operator==(const relative_path& other) const { return _parent == other._parent && _child == other._child; }
+};
+
 enum class file_mode
 {
   WRITING,
