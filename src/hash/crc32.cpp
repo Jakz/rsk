@@ -1,4 +1,7 @@
 #include <iostream>
+
+#include "hash.h"
+
 #include "base/common.h"
 #include "base/exceptions.h"
 
@@ -32,7 +35,7 @@ u32 updateCRC(const byte* data, size_t length, u32 previous = 0)
   return ~crc;
 }
 
-u32 computeCRC32(const class path& path)
+u32 hashes::computeCRC32(const class path& path)
 {
   if (!path.exists())
     throw exceptions::file_not_found(path);
@@ -86,7 +89,7 @@ static void run(const std::string& name, repository::arg_iterator begin, reposit
   
   path path = args::get(argpath);
   
-  u32 crc = computeCRC32(path);
+  u32 crc = hashes::computeCRC32(path);
   
   std::cout << std::hex << crc << std::endl;
 }

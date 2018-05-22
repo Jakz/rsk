@@ -15,6 +15,7 @@ private:
   std::string data;
   
 public:
+  using predicate = std::function<bool(const path&)>;
   struct hash
   {
   public:
@@ -41,7 +42,7 @@ public:
   
   friend std::ostream& operator<<(std::ostream& os, const class path& path) { os << path.data; return os; }
   
-  static std::unordered_set<path, hash> scanFolder(path base, bool recursive, std::function<bool(const path&)> excludePredicate);
+  static std::unordered_set<path, hash> scanFolder(path base, bool recursive, predicate excludePredicate);
 };
 
 class relative_path

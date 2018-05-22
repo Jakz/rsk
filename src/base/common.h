@@ -18,6 +18,8 @@ using u64 = uint64_t;
 using byte = u8;
 using offset_t = u32;
 
+using s64 = int64_t;
+
 #if !defined(__BYTE_ORDER__) || (__BYTE_ORDER__ != __ORDER_LITTLE_ENDIAN__ && __BYTE_ORDER__ != __ORDER_BIG_ENDIAN__)
 #error __BYTE_ORDER__ undefined
 #endif
@@ -55,6 +57,19 @@ namespace hidden
 
 using u16le = std::conditional<IS_LITTLE_ENDIAN, hidden::u16, hidden::u16re>::type;
 using u16be = std::conditional<IS_LITTLE_ENDIAN, hidden::u16re, hidden::u16>::type;
+
+struct u32_optional
+{
+private:
+  u64 data;
+  
+public:
+  u32_optional() : data(0xFFFFFFFFFFFFFFFFLL) { }
+  u32_optional(u32 data) : data(data) { }
+  
+  bool isPresent() const { return (data & 0xFFFFFFFF) != 0; }
+  void set(u32 data) { this->data = data; }
+};
 
 
 constexpr size_t KB16 = 16384;

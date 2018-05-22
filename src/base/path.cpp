@@ -50,7 +50,7 @@ bool path::hasExtension(const std::string& ext) const
   return index != std::string::npos && data.substr(index+1) == ext;
 }
 
-std::unordered_set<path, path::hash> path::scanFolder(path base, bool recursive, std::function<bool(const path&)> excludePredicate)
+std::unordered_set<path, path::hash> path::scanFolder(path base, bool recursive, predicate excludePredicate)
 {
   std::unordered_set<path, path::hash> files;
   

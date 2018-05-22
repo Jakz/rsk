@@ -63,10 +63,31 @@ void listCommand(const std::string& name, repository::arg_iterator begin, reposi
   }
 }
 
+#include "files/duplicate_finder.h"
+
 int main(int argc, const char * argv[])
 {  
-  const path path1 = "/Volumes/Vicky/Photos-SSD/Organized/Vacanze";
-  const path path2 = "/Volumes/Data/Photos/Organized/Vacanze";
+  DuplicateFinder finder = DuplicateFinder();
+  const auto excludePredicate = [](const path& path) { return path.c_str()[0] == '.' || path.hasExtension("ithmb") || path.hasExtension("tmp"); };
+  
+  const path path1 = "/Volumes/Vicky/Photos-SSD/GPX";
+  const path path2 = "/Volumes/Data/Photos/GPX";
+  
+  finder.addSearchPath(path1, true, excludePredicate);
+  finder.addSearchPath(path2, true, excludePredicate);
+  
+  auto results = finder.scanPaths();
+  
+  auto range1 = results.files.equal_range(path1);
+  auto range2 = results.files.equal_range(path2);
+  
+  std::cout << "Found " << results.size() << " files." << std::endl;
+  std::cout << std::distance(range1.second, range1.first) << " " << std::distance(range2.second, range2.first);
+
+  
+  
+  return 0;
+  
   
   auto files1 = path::scanFolder(path1, true, [](const path& path) { return path.c_str()[0] == '.' || path.hasExtension("ithmb") || path.hasExtension("tmp"); });
   auto files2 = path::scanFolder(path2, true, [](const path& path) { return path.c_str()[0] == '.' || path.hasExtension("ithmb"); });
