@@ -63,9 +63,42 @@ void listCommand(const std::string& name, repository::arg_iterator begin, reposi
   }
 }
 
-#include "files/duplicate_finder.h"
+namespace formats { namespace cue {
+  struct Cue { };
+  struct Environment { };
+  struct istring
+  {
+    std::string data;
+    
+    bool operator==(const std::string& other) const { return strings::caseInsensitiveEqual(data, other); }
+    
+    istring(const std::string& data) : data(data) { }
+  };
+  
+  Cue parse(Environment& env, const std::vector<istring>& tokens);
+  std::vector<istring> tokenize(const std::string& line);
+} }
 
-int main(int argc, const char * argv[])
+int main(int argc, const char* argv[])
+{
+  const path path = "/Volumes/Vicky/Movies HD/extracted/IBM/Take No Prisoners (USA).cue";
+  auto handle = file_handle(path, file_mode::READING);
+  std::string content = handle.toString();
+  
+  std::vector<formats::cue::istring> tokens = formats::cue::tokenize(content);
+  formats::cue::Environment env;
+  auto cue = formats::cue::parse(env, tokens);
+  
+  for (const auto& t : tokens)
+    std::cout << t.data << std::endl;
+  
+
+}
+
+#include "files/duplicate_finder.h"
+#include "base/file_system.h"
+
+int mainzzzz(int argc, const char * argv[])
 {  
   DuplicateFinder finder = DuplicateFinder();
   const auto excludePredicate = [](const path& path) { return path.c_str()[0] == '.' || path.hasExtension("ithmb") || path.hasExtension("tmp"); };
@@ -88,9 +121,8 @@ int main(int argc, const char * argv[])
   
   return 0;
   
-  
-  auto files1 = path::scanFolder(path1, true, [](const path& path) { return path.c_str()[0] == '.' || path.hasExtension("ithmb") || path.hasExtension("tmp"); });
-  auto files2 = path::scanFolder(path2, true, [](const path& path) { return path.c_str()[0] == '.' || path.hasExtension("ithmb"); });
+  /*auto files1 = FileSystem::i()->contentsOfFolder(path1, true, [](const path& path) { return path.c_str()[0] == '.' || path.hasExtension("ithmb") || path.hasExtension("tmp"); });
+  auto files2 = FileSystem::i()->contentsOfFolder(path2, true, [](const path& path) { return path.c_str()[0] == '.' || path.hasExtension("ithmb"); });
   std::unordered_set<path, path::hash> diff;
   
   for (const path& p : files1)
@@ -106,7 +138,7 @@ int main(int argc, const char * argv[])
     std::cout << p << std::endl;
   
   
-  
+  */
   
   return 0;
   

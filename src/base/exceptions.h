@@ -17,6 +17,15 @@ namespace exceptions
     
   };
   
+  class rsk_messaged_exception : public rsk_exception
+  {
+  private:
+    std::string _message;
+    
+  public:
+    rsk_messaged_exception(const std::string& message) : _message(message) { }
+    const char* what() const noexcept override { return _message.c_str(); }
+  };
   class file_not_found : public rsk_exception
   {
   private:
@@ -40,6 +49,17 @@ namespace exceptions
     const char* what() const noexcept override { return parent.c_str(); }
   };
   
+  class path_exception : public rsk_exception
+  {
+  private:
+    std::string _message;
+    
+  public:
+    path_exception(const std::string& message) : _message(message) { }
+    
+    const char* what() const noexcept override { return _message.c_str(); }
+  };
+  
   class error_opening_file : public rsk_exception
   {
   private:
@@ -61,6 +81,8 @@ namespace exceptions
     
     const char* what() const noexcept override { return path.c_str(); }
   };
+  
+  using file_format_error = rsk_messaged_exception;
   
   class parse_help_request : public rsk_exception
   {

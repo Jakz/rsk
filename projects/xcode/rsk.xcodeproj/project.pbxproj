@@ -18,7 +18,10 @@
 		041CE2B21E75F74C002C4783 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041CE2B11E75F74C002C4783 /* md5.cpp */; };
 		047B219C1E79902600DD9FFD /* iso9660.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047B219B1E79902600DD9FFD /* iso9660.cpp */; };
 		04B20FF81E883D9400758225 /* repository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B20FF61E883D9400758225 /* repository.cpp */; };
+		04B9266D20B45EB4002AA004 /* cue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B9266C20B45EB4002AA004 /* cue.cpp */; };
+		04B9267020B45FC3002AA004 /* file_system.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B9266E20B45FC3002AA004 /* file_system.cpp */; };
 		04BB09771E94A375001196BC /* crc32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04BB09761E94A375001196BC /* crc32.cpp */; };
+		04DD7BE21F6B035D00759561 /* duplicate_finder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04DD7BE01F6B035D00759561 /* duplicate_finder.cpp */; };
 		04E729121EBF679F009DA0D1 /* posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041CE29A1E75E3ED002C4783 /* posix.cc */; };
 		04E729131EBF679F009DA0D1 /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041CE2A91E75E851002C4783 /* common.cpp */; };
 		04E729151EBF679F009DA0D1 /* crc32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04BB09761E94A375001196BC /* crc32.cpp */; };
@@ -80,7 +83,13 @@
 		04B20FF61E883D9400758225 /* repository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = repository.cpp; sourceTree = "<group>"; };
 		04B20FF71E883D9400758225 /* repository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = repository.h; sourceTree = "<group>"; };
 		04B20FF91E88400100758225 /* args.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = args.h; sourceTree = "<group>"; };
+		04B9266C20B45EB4002AA004 /* cue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cue.cpp; sourceTree = "<group>"; };
+		04B9266E20B45FC3002AA004 /* file_system.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_system.cpp; sourceTree = "<group>"; };
+		04B9266F20B45FC3002AA004 /* file_system.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_system.h; sourceTree = "<group>"; };
 		04BB09761E94A375001196BC /* crc32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = crc32.cpp; sourceTree = "<group>"; };
+		04DD7BDE1F6B018F00759561 /* hash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hash.h; sourceTree = "<group>"; };
+		04DD7BE01F6B035D00759561 /* duplicate_finder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = duplicate_finder.cpp; sourceTree = "<group>"; };
+		04DD7BE11F6B035D00759561 /* duplicate_finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = duplicate_finder.h; sourceTree = "<group>"; };
 		04E7290A1EBF539B009DA0D1 /* arguments.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = arguments.h; sourceTree = "<group>"; };
 		04E7290D1EBF614C009DA0D1 /* ips.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ips.h; sourceTree = "<group>"; };
 		04E7290E1EBF670C009DA0D1 /* catch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = catch.h; sourceTree = "<group>"; };
@@ -140,6 +149,7 @@
 				04B20FF61E883D9400758225 /* repository.cpp */,
 				04B20FF71E883D9400758225 /* repository.h */,
 				041CE2A81E75E851002C4783 /* base */,
+				04DD7BDF1F6B035D00759561 /* files */,
 				041CE2B01E75F74C002C4783 /* hash */,
 				04E7290C1EBF614C009DA0D1 /* patches */,
 				041CE2901E75E3ED002C4783 /* formats */,
@@ -154,6 +164,7 @@
 		041CE2901E75E3ED002C4783 /* formats */ = {
 			isa = PBXGroup;
 			children = (
+				04B9266C20B45EB4002AA004 /* cue.cpp */,
 				041CE2911E75E3ED002C4783 /* cso.cpp */,
 				047B219B1E79902600DD9FFD /* iso9660.cpp */,
 			);
@@ -194,6 +205,8 @@
 				041CE2A91E75E851002C4783 /* common.cpp */,
 				041CE2AA1E75E851002C4783 /* common.h */,
 				041CE2AB1E75E851002C4783 /* exceptions.h */,
+				04B9266E20B45FC3002AA004 /* file_system.cpp */,
+				04B9266F20B45FC3002AA004 /* file_system.h */,
 				04E7290A1EBF539B009DA0D1 /* arguments.h */,
 				041CE2AE1E75E94D002C4783 /* path.cpp */,
 				041CE2AD1E75E90F002C4783 /* path.h */,
@@ -204,10 +217,20 @@
 		041CE2B01E75F74C002C4783 /* hash */ = {
 			isa = PBXGroup;
 			children = (
+				04DD7BDE1F6B018F00759561 /* hash.h */,
 				04BB09761E94A375001196BC /* crc32.cpp */,
 				041CE2B11E75F74C002C4783 /* md5.cpp */,
 			);
 			path = hash;
+			sourceTree = "<group>";
+		};
+		04DD7BDF1F6B035D00759561 /* files */ = {
+			isa = PBXGroup;
+			children = (
+				04DD7BE01F6B035D00759561 /* duplicate_finder.cpp */,
+				04DD7BE11F6B035D00759561 /* duplicate_finder.h */,
+			);
+			path = files;
 			sourceTree = "<group>";
 		};
 		04E7290C1EBF614C009DA0D1 /* patches */ = {
@@ -292,6 +315,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				041CE2A31E75E408002C4783 /* posix.cc in Sources */,
+				04B9266D20B45EB4002AA004 /* cue.cpp in Sources */,
+				04B9267020B45FC3002AA004 /* file_system.cpp in Sources */,
 				041CE2AC1E75E8BE002C4783 /* common.cpp in Sources */,
 				041CE2A01E75E400002C4783 /* main.cpp in Sources */,
 				04BB09771E94A375001196BC /* crc32.cpp in Sources */,
@@ -302,6 +327,7 @@
 				041CE2A21E75E404002C4783 /* ostream.cc in Sources */,
 				041CE2AF1E75E94D002C4783 /* path.cpp in Sources */,
 				041CE2B21E75F74C002C4783 /* md5.cpp in Sources */,
+				04DD7BE21F6B035D00759561 /* duplicate_finder.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

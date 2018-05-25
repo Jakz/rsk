@@ -18,6 +18,14 @@ bool strings::isPrefixOf(const std::string& string, const std::string& prefix)
   return std::mismatch(prefix.begin(), prefix.end(), string.begin()).first == prefix.end();
 }
 
+std::string strings::tolower(const std::string &text)
+{
+  std::string lname;
+  lname.resize(text.size());
+  transform(text.begin(), text.end(), lname.begin(), ::tolower);
+  return lname;
+}
+
 
 
 enum class ZlibResult : int

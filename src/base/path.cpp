@@ -6,80 +6,84 @@
 #include <sys/stat.h>
 #include <dirent.h>
 
+#include "file_system.h"
+
 static constexpr const char SEPARATOR = '/';
+
+path::path(const char* data) : _data(data)
+{
+  if (_data.back() == SEPARATOR && _data.length() > 1)
+    _data.pop_back();
+}
+
+path::path(const std::string& data) : _data(data)
+{
+  if (_data.back() == SEPARATOR && _data.length() > 1)
+    _data.pop_back();
+}
+
+bool path::isAbsolute() const
+{
+  return !_data.empty() && _data[0] == SEPARATOR;
+}
 
 bool path::exists() const
 {
-  struct stat buffer;
-  return stat(data.c_str(), &buffer) == 0;
+  return FileSystem::i()->existsAsFile(*this) || FileSystem::i()->existsAsFolder(*this);
 }
 
 path path::relativizeToParent(const path& parent) const
 {
-  if (!strings::isPrefixOf(data, parent.data))
+  if (!strings::isPrefixOf(_data, parent._data))
     throw exceptions::path_non_relative(parent, *this);
   else
-    return path(data.substr(parent.data.length()+1));
+    return path(_data.substr(parent._data.length()+1));
 }
 
 path path::relativizeChildren(const path& children) const
 {
-  if (!strings::isPrefixOf(children.data, data))
+  if (!strings::isPrefixOf(children._data, _data))
     throw exceptions::path_non_relative(*this, children);
   else
-    return path(children.data.substr(data.length()+1));
+    return path(children._data.substr(_data.length()+1));
+}
+
+std::string path::filename() const
+{
+  size_t index = _data.find_last_of(SEPARATOR);
+  
+  return index != std::string::npos ? _data.substr(index+1) : _data;
 }
 
 bool endsWith(const std::string& str, char c) { return str.back() == c; }
 bool startsWith(const std::string& str, char c) { return str.front() == c; }
 path path::append(const path& other) const
 {
-  if (data.empty())
+  if (other.isAbsolute())
+    throw exceptions::path_exception(fmt::sprintf("path::append: children %s can't be absolute", other.c_str()));
+  
+  if (_data.empty())
     return other;
-  else if (!endsWith(data,SEPARATOR) && !startsWith(other.data, SEPARATOR))
-    return path(data + SEPARATOR + other.data);
-  else if (endsWith(data, SEPARATOR) && startsWith(other.data, SEPARATOR))
-    return path(data + other.data.substr(1));
+  else if (!endsWith(_data,SEPARATOR) && !startsWith(other._data, SEPARATOR))
+    return path(_data + SEPARATOR + other._data);
+  else if (endsWith(_data, SEPARATOR) && startsWith(other._data, SEPARATOR))
+    return path(_data + other._data.substr(1));
   else
-    return path(data + other.data);
+    return path(_data + other._data);
 }
 
 bool path::hasExtension(const std::string& ext) const
 {
-  size_t index = data.find_last_of('.');
-  return index != std::string::npos && data.substr(index+1) == ext;
+  size_t index = _data.find_last_of('.');
+  return index != std::string::npos && _data.substr(index+1) == ext;
 }
 
-std::unordered_set<path, path::hash> path::scanFolder(path base, bool recursive, predicate excludePredicate)
+path path::removeLast() const
 {
-  std::unordered_set<path, path::hash> files;
+  size_t index = _data.rfind(SEPARATOR);
   
-  DIR *d;
-  struct dirent *dir;
-  d = opendir(base.c_str());
-  
-  if (d)
-  {
-    while ((dir = readdir(d)) != NULL)
-    {
-      path name = path(dir->d_name);
-      
-      if (name == "." || name == ".." || name == ".DS_Store" || excludePredicate(path(name)))
-        continue;
-      else if (dir->d_type == DT_DIR && recursive)
-      {
-        auto rfiles = scanFolder(base.append(name), recursive, excludePredicate);
-        files.reserve(files.size() + rfiles.size());
-        files.insert(rfiles.begin(), rfiles.end());
-      }
-      else if (dir->d_type == DT_REG)
-        files.insert(base.append(name));
-    }
-    
-    closedir(d);
-  }
+  if (index != std::string::npos)
+    return path(_data.substr(0, index));
   else
-    throw exceptions::file_not_found(base);
-  
-  return files;
+    return path();
 }

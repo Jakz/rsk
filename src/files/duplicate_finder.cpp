@@ -1,4 +1,5 @@
 #include "duplicate_finder.h"
+#include "base/file_system.h"
 
 void DuplicateFinder::addSearchPath(const path path, bool recursive, path::predicate exclusionPredicate)
 {
@@ -10,7 +11,8 @@ DuplicateFinder::result_set DuplicateFinder::scanPaths()
   result_set result;
   for (const SearchPath& searchPath : searchPaths)
   {
-    auto files = path::scanFolder(searchPath.path, searchPath.recursive, searchPath.exclusionPredicate);
+    auto files = FileSystem::i()->contentsOfFolder(searchPath.path, searchPath.recursive, searchPath.exclusionPredicate);
+    
     std::transform(
       files.begin(),
       files.end(),
