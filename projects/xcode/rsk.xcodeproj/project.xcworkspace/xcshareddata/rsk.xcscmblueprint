@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "7DE0E22604A394B3A0E8305F043A0CFA3BD3628E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "D8A6A9E2A451FAFBB94538CEC2AD204D957935CB" : 9223372036854775807,
+    "7DE0E22604A394B3A0E8305F043A0CFA3BD3628E" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B9B4EE68-3704-4D02-BD39-FB8ABF6B0484",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "D8A6A9E2A451FAFBB94538CEC2AD204D957935CB" : "..\/xcode\/toolbox",
+    "7DE0E22604A394B3A0E8305F043A0CFA3BD3628E" : "rsk\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "rsk",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "projects\/xcode\/rsk.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:Jakz\/rsk.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7DE0E22604A394B3A0E8305F043A0CFA3BD3628E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:Jakz\/toolbox.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D8A6A9E2A451FAFBB94538CEC2AD204D957935CB"
+    }
+  ]
+}
