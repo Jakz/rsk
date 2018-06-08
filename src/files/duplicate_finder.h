@@ -1,7 +1,7 @@
 #pragma once
 
-#include "base/common.h"
-#include "base/path.h"
+#include "tbx/base/common.h"
+#include "tbx/base/path.h"
 
 #include <unordered_map>
 
@@ -21,8 +21,8 @@ public:
   struct result_data
   {
     relative_path path;
-    u32_optional size;
-    u32_optional crc;
+    optional<u32> size;
+    optional<u32> crc;
     
     result_data(relative_path path) : path(path) { }
   };

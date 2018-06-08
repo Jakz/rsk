@@ -6,7 +6,7 @@
 //  Copyright © 2017 Jack. All rights reserved.
 //
 
-#include "base/common.h"
+#include "tbx/base/common.h"
 #include "util/args.h"
 #include "repository.h"
 #include <iostream>
@@ -96,7 +96,7 @@ int main(int argc, const char* argv[])
 }
 
 #include "files/duplicate_finder.h"
-#include "base/file_system.h"
+#include "tbx/base/file_system.h"
 
 int mainzzzz(int argc, const char * argv[])
 {  
@@ -222,8 +222,8 @@ int mainzzzz(int argc, const char * argv[])
     std::cout << " FILE INFO" << std::endl;
     std::cout << "====================" << std::endl;
     std::cout << "Filepath: " << path << std::endl;
-    std::cout << "Compressed size: " << utils::humanReadableSize(length, true) << std::endl;
-    std::cout << "Uncompressed size: " << utils::humanReadableSize(header.uncompressed_size, true) << std::endl;
+    std::cout << "Compressed size: " << strings::humanReadableSize(length, true) << std::endl;
+    std::cout << "Uncompressed size: " << strings::humanReadableSize(header.uncompressed_size, true) << std::endl;
     std::cout << "Compression ratio: " << std::setprecision(3) << header.uncompressed_size / (float)length << "x" << std::endl;
     std::cout << "====================" << std::endl;
     std::cout << "Block size: " << header.block_size << std::endl;

@@ -1,5 +1,5 @@
 #include "duplicate_finder.h"
-#include "base/file_system.h"
+#include "tbx/base/file_system.h"
 
 void DuplicateFinder::addSearchPath(const path path, bool recursive, path::predicate exclusionPredicate)
 {
