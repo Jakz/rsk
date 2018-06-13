@@ -8,7 +8,26 @@ namespace repository
 {
   using arg_list = std::vector<std::string>;
   using arg_iterator = std::vector<std::string>::const_iterator;
-  using arg_command = std::function<void(const std::string&, arg_iterator, arg_iterator)>;
+  
+  class Repository;
+  struct Command;
+  
+  class CommandEnvironment
+  {
+  public:
+    Repository* repository;
+    const Command& command;
+    const std::string& name;
+    arg_iterator begin;
+    arg_iterator end;
+    
+  public:
+    CommandEnvironment(Repository* repository, const Command& command, const std::string& name, arg_iterator begin, arg_iterator end) :
+      repository(repository), command(command), name(name), begin(begin), end(end)
+    { }
+  };
+  
+  using arg_command = std::function<void(const CommandEnvironment&)>;
   
   struct Command
   {
@@ -22,14 +41,18 @@ namespace repository
     args::ArgumentParser buildParser() const;
   };
   
+
+  
   class Repository
   {
+  using map_t = std::unordered_map<std::string, std::reference_wrapper<const Command>>;
+    
   private:
     std::vector<Command> commands;
     
   public:
     void registerCommand(const Command& command) { commands.push_back(command); }
-    std::unordered_map<std::string, arg_command> prepareCommandMap();
+    map_t prepareCommandMap();
     
     using iterator = std::vector<Command>::const_iterator;
 

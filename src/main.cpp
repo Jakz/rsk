@@ -44,7 +44,7 @@ size_t file_length(FILE* file)
 
 void test();
 
-void listCommand(const std::string& name, repository::arg_iterator begin, repository::arg_iterator end)
+void listCommand(const repository::CommandEnvironment& env)
 {
   using namespace std;
   using namespace repository;
@@ -79,68 +79,12 @@ namespace formats { namespace cue {
   std::vector<istring> tokenize(const std::string& line);
 } }
 
-int main(int argc, const char* argv[])
-{
-  const path path = "/Volumes/Vicky/Movies HD/extracted/IBM/Take No Prisoners (USA).cue";
-  auto handle = file_handle(path, file_mode::READING);
-  std::string content = handle.toString();
-  
-  std::vector<formats::cue::istring> tokens = formats::cue::tokenize(content);
-  formats::cue::Environment env;
-  auto cue = formats::cue::parse(env, tokens);
-  
-  for (const auto& t : tokens)
-    std::cout << t.data << std::endl;
-  
-
-}
-
 #include "files/duplicate_finder.h"
 #include "tbx/base/file_system.h"
 
-int mainzzzz(int argc, const char * argv[])
-{  
-  DuplicateFinder finder = DuplicateFinder();
-  const auto excludePredicate = [](const path& path) { return path.c_str()[0] == '.' || path.hasExtension("ithmb") || path.hasExtension("tmp"); };
-  
-  const path path1 = "/Volumes/Vicky/Photos-SSD/GPX";
-  const path path2 = "/Volumes/Data/Photos/GPX";
-  
-  finder.addSearchPath(path1, true, excludePredicate);
-  finder.addSearchPath(path2, true, excludePredicate);
-  
-  auto results = finder.scanPaths();
-  
-  auto range1 = results.files.equal_range(path1);
-  auto range2 = results.files.equal_range(path2);
-  
-  std::cout << "Found " << results.size() << " files." << std::endl;
-  std::cout << std::distance(range1.second, range1.first) << " " << std::distance(range2.second, range2.first);
-
-  
-  
-  return 0;
-  
-  /*auto files1 = FileSystem::i()->contentsOfFolder(path1, true, [](const path& path) { return path.c_str()[0] == '.' || path.hasExtension("ithmb") || path.hasExtension("tmp"); });
-  auto files2 = FileSystem::i()->contentsOfFolder(path2, true, [](const path& path) { return path.c_str()[0] == '.' || path.hasExtension("ithmb"); });
-  std::unordered_set<path, path::hash> diff;
-  
-  for (const path& p : files1)
-    if (files2.find(path2.append(p.relativizeToParent(path1))) == files2.end())
-      diff.insert(p);
-  
-  for (const path& p : files2)
-    if (files1.find(path1.append(p.relativizeToParent(path2))) == files1.end())
-      diff.insert(p);
-  
-  std::cout << "Found " << files1.size() << " and " << files2.size() << std::endl;
-  for (const path& p : diff)
-    std::cout << p << std::endl;
-  
-  
-  */
-  
-  return 0;
+int main(int argc, const char * argv[])
+{
+  auto* repository = repository::Repository::instance();
   
   //const std::vector<std::string> args(argv + 1, argv + argc);
   const std::vector<std::string> args = /*{"list"};*/{"crc32", "/Users/jack/Desktop/hiroshi3.rar"};
@@ -149,15 +93,16 @@ int mainzzzz(int argc, const char * argv[])
   parser.helpParams.showTerminator = false;
   parser.Prog(PROG_NAME);
   parser.ProglinePostfix("{arguments}");
-  auto map = repository::Repository::instance()->prepareCommandMap();
-  map["list"] = listCommand;
-  args::MapPositional<std::string, repository::arg_command> command(parser, "command", "Command to execute", map);
+  repository->registerCommand(repository::Command("list", "print all available commands", listCommand));
+  auto map = repository->prepareCommandMap();
+  args::MapPositional<std::string, std::reference_wrapper<const repository::Command>> command(parser, "command", "Command to execute", map, map.find("list")->second);
   command.KickOut(true);
 
   try
   {
     auto next = parser.ParseArgs(args);
-    args::get(command)(PROG_NAME, next, std::end(args));
+    const auto& commandReference = args::get(command);
+    commandReference.get().callback(repository::CommandEnvironment(repository::Repository::instance(), commandReference.get(), PROG_NAME, next, std::end(args)));
   }
   catch (args::Help e)
   {
@@ -284,10 +229,10 @@ int mainzzzz(int argc, const char * argv[])
   delete [] buffer;
 }
 
-static void run(const std::string& name, repository::arg_iterator begin, repository::arg_iterator end);
+static void run(const repository::CommandEnvironment&);
 static const repository::CommandBuilder builder(repository::Command("cso", "CSO format conversions", run));
 
-static void run(const std::string& name, repository::arg_iterator begin, repository::arg_iterator end)
+static void run(const repository::CommandEnvironment& env)
 {
   args::ArgumentParser parser = builder.command().buildParser();
   args::Group group(parser, "operating mode", args::Group::Validators::Xor);
@@ -298,5 +243,5 @@ static void run(const std::string& name, repository::arg_iterator begin, reposit
   args::Positional<std::string> src(parser, "src", "source path");
   args::Positional<std::string> dest(parser, "dest", "destination path");
   
-  parser.ParseArgs(begin, end);
+  parser.ParseArgs(env.begin, env.end);
 }

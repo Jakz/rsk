@@ -10,12 +10,12 @@ Repository* Repository::instance()
   return &repository;
 }
 
-std::unordered_map<std::string, arg_command> Repository::prepareCommandMap()
+Repository::map_t Repository::prepareCommandMap()
 {
-  std::unordered_map<std::string, repository::arg_command> commandMap;
+  map_t commandMap;
   
-  std::transform(commands.begin(), commands.end(), std::inserter(commandMap, commandMap.end()), [](const Command& command) {
-    return std::make_pair(command.name, command.callback);
+  std::transform(commands.begin(), commands.end(), std::inserter(commandMap, commandMap.end()), [] (const Command& command) {
+    return std::make_pair(command.name, std::ref(command));
   });
   
   return commandMap;

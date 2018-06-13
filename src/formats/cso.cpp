@@ -17,6 +17,8 @@
 
 #include <zlib.h>
 
+/* https://github.com/unknownbrackets/maxcso/blob/master/README_CSO.md */
+
 #define FATAL_ERROR(c, ...) if (c) { std::cout << __VA_ARGS__; return 1; }
 
 using byte = uint8_t;
